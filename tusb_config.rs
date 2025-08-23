@@ -14,8 +14,6 @@ pub fn generate_cfg() -> String {
     cfg.push_str("#define CFG_TUSB_OS                 OPT_OS_NONE\n");
     cfg.push_str("#define CFG_TUSB_MEM_SECTION        __attribute__((section(\".data.usb\")))\n");
 
-    cfg.push_str("#define CFG_TUD_MSC_EP_BUFSIZE 512\n");
-
     #[cfg(all(feature = "host", feature = "device"))]
 compile_error!("choose only host or device");
 #[cfg(not(any(feature = "host", feature ="device")))]
@@ -36,8 +34,14 @@ cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC18XX\n");
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC40XX\n");
 #[cfg(feature = "lpc43xx")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC43XX\n");
+#[cfg(feature = "lpc51")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC51\n");
 #[cfg(feature = "lpc51uxx")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC51UXX\n");
+#[cfg(feature = "lpc54")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC54\n");
+#[cfg(feature = "lpc55")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC55\n");
 #[cfg(feature = "lpc54xxx")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_LPC54XXX\n");
 #[cfg(feature = "lpc55xx")]
@@ -84,6 +88,22 @@ cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32L4\n");
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32G0\n");
 #[cfg(feature = "stm32g4")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32G4\n");
+#[cfg(feature = "stm32wb")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32WB\n");
+#[cfg(feature = "stm32u5")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32U5\n");
+#[cfg(feature = "stm32l5")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32L5\n");
+#[cfg(feature = "stm32h5")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32H5\n");
+#[cfg(feature = "stm32u0")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32U0\n");
+#[cfg(feature = "stm32h7rs")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32H7RS\n");
+#[cfg(feature = "stm32c0")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32C0\n");
+#[cfg(feature = "stm32n6")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_STM32N6\n");
 #[cfg(feature = "cxd56")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_CXD56\n");
 #[cfg(feature = "msp430x5xx")]
@@ -96,8 +116,12 @@ cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_TM4C123\n");
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_TM4C129\n");
 #[cfg(feature = "valentyusb_eptri")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_VALENTYUSB_EPTRI\n");
+#[cfg(feature = "mimxrt1xxx")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MIMXRT1XXX\n");
 #[cfg(feature = "mimxrt10xx")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MIMXRT10XX\n");
+#[cfg(feature = "mimxrt11xx")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MIMXRT11XX\n");
 #[cfg(feature = "nuc121")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_NUC121\n");
 #[cfg(feature = "nuc126")]
@@ -110,10 +134,30 @@ cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_NUC505\n");
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32S2\n");
 #[cfg(feature = "esp32s3")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32S3\n");
+#[cfg(feature = "esp32")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32\n");
+#[cfg(feature = "esp32c3")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32C3\n");
+#[cfg(feature = "esp32c6")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32C6\n");
+#[cfg(feature = "esp32c2")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32C2\n");
+#[cfg(feature = "esp32h2")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32H2\n");
+#[cfg(feature = "esp32p4")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_ESP32P4\n");
 #[cfg(feature = "da1469x")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_DA1469X\n");
 #[cfg(feature = "rp2040")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_RP2040\n");
+#[cfg(feature = "kinetis_kl")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_KINETIS_KL\n");
+#[cfg(feature = "kinetis_k32l")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_KINETIS_K32L\n");
+#[cfg(feature = "kinetis_k32")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_KINETIS_K32\n");
+#[cfg(feature = "kinetis_k")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_KINETIS_K\n");
 #[cfg(feature = "mkl25zxx")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MKL25ZXX\n");
 #[cfg(feature = "k32l2bxx")]
@@ -126,6 +170,8 @@ cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_RX63X\n");
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_RX65X\n");
 #[cfg(feature = "rx72n")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_RX72N\n");
+#[cfg(feature = "raxxx")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_RAXXX\n");
 #[cfg(feature = "mm32f327x")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MM32F327X\n");
 #[cfg(feature = "gd32vf103")]
@@ -140,18 +186,80 @@ cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_BCM2837\n");
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_XMC4000\n");
 #[cfg(feature = "pic32mz")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_PIC32MZ\n");
+#[cfg(feature = "pic32mm")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_PIC32MM\n");
+#[cfg(feature = "pic32mx")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_PIC32MX\n");
+#[cfg(feature = "pic32mk")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_PIC32MK\n");
+#[cfg(feature = "pic24")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_PIC24\n");
+#[cfg(feature = "dspic33")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_DSPIC33\n");
 #[cfg(feature = "ft90x")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_FT90X\n");
 #[cfg(feature = "ft93x")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_FT93X\n");
 #[cfg(feature = "f1c100s")]
 cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_F1C100S\n");
+#[cfg(feature = "ch32v307")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_CH32V307\n");
+#[cfg(feature = "ch32f20x")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_CH32F20X\n");
+#[cfg(feature = "ch32v20x")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_CH32V20X\n");
+#[cfg(feature = "ch32v103")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_CH32V103\n");
+#[cfg(feature = "mcxn9")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MCXN9\n");
+#[cfg(feature = "mcxa15")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MCXA15\n");
+#[cfg(feature = "max32690")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MAX32690\n");
+#[cfg(feature = "max32665")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MAX32665\n");
+#[cfg(feature = "max32666")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MAX32666\n");
+#[cfg(feature = "max32650")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MAX32650\n");
+#[cfg(feature = "max78002")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_MAX78002\n");
+#[cfg(feature = "at32f403a_407")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_AT32F403A_407\n");
+#[cfg(feature = "at32f415")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_AT32F415\n");
+#[cfg(feature = "at32f435_437")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_AT32F435_437\n");
+#[cfg(feature = "at32f423")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_AT32F423\n");
+#[cfg(feature = "at32f402_405")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_AT32F402_405\n");
+#[cfg(feature = "at32f425")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_AT32F425\n");
+#[cfg(feature = "at32f413")]
+cfg.push_str("#define CFG_TUSB_MCU OPT_MCU_AT32F413\n");
+#[cfg(all(feature = "host", feature = "dwc2_dma_enable_default"))]
+cfg.push_str("#define CFG_TUH_DWC2_DMA_ENABLE_DEFAULT 1\n");
+#[cfg(all(feature = "host", feature = "rpi_pio_usb"))]
+cfg.push_str("#define CFG_TUH_RPI_PIO_USB 1\n");
+#[cfg(all(feature = "host", feature = "max3421"))]
+cfg.push_str("#define CFG_TUH_MAX3421 1\n");
+#[cfg(all(feature = "host", feature = "mem_dcache_enable_default"))]
+cfg.push_str("#define CFG_TUH_MEM_DCACHE_ENABLE_DEFAULT 1\n");
 #[cfg(all(feature = "host", feature = "hub"))]
 cfg.push_str("#define CFG_TUH_HUB 1\n");
 #[cfg(all(feature = "host", feature = "hub"))]
 cfg.push_str("#define CFG_TUH_DEVICE_MAX 4\n");
 #[cfg(all(feature = "host", feature = "cdc"))]
 cfg.push_str("#define CFG_TUH_CDC 1\n");
+#[cfg(all(feature = "host", feature = "cdc_ftdi"))]
+cfg.push_str("#define CFG_TUH_CDC_FTDI 1\n");
+#[cfg(all(feature = "host", feature = "cdc_cp210x"))]
+cfg.push_str("#define CFG_TUH_CDC_CP210X 1\n");
+#[cfg(all(feature = "host", feature = "cdc_ch34x"))]
+cfg.push_str("#define CFG_TUH_CDC_CH34X 1\n");
+#[cfg(all(feature = "host", feature = "cdc_pl2303"))]
+cfg.push_str("#define CFG_TUH_CDC_PL2303 1\n");
 #[cfg(all(feature = "host", feature = "hid"))]
 cfg.push_str("#define CFG_TUH_HID 4\n");
 #[cfg(all(feature = "host", feature = "midi"))]
@@ -160,6 +268,20 @@ cfg.push_str("#define CFG_TUH_MIDI 1\n");
 cfg.push_str("#define CFG_TUH_MSC 1\n");
 #[cfg(all(feature = "host", feature = "vendor"))]
 cfg.push_str("#define CFG_TUH_VENDOR 1\n");
+#[cfg(all(feature = "host", feature = "api_edpt_xfer"))]
+cfg.push_str("#define CFG_TUH_API_EDPT_XFER 1\n");
+#[cfg(all(feature = "device", feature = "dwc2_dma_enable_default"))]
+cfg.push_str("#define CFG_TUD_DWC2_DMA_ENABLE_DEFAULT 1\n");
+#[cfg(all(feature = "device", feature = "ci_hs_vbus_charge_default"))]
+cfg.push_str("#define CFG_TUD_CI_HS_VBUS_CHARGE_DEFAULT 1\n");
+#[cfg(all(feature = "device", feature = "rpi_pio_usb"))]
+cfg.push_str("#define CFG_TUD_RPI_PIO_USB 1\n");
+#[cfg(all(feature = "device", feature = "mem_dcache_enable_default"))]
+cfg.push_str("#define CFG_TUD_MEM_DCACHE_ENABLE_DEFAULT 1\n");
+#[cfg(all(feature = "device", feature = "test_mode"))]
+cfg.push_str("#define CFG_TUD_TEST_MODE 1\n");
+#[cfg(all(feature = "device", feature = "bth"))]
+cfg.push_str("#define CFG_TUD_BTH 1\n");
 #[cfg(all(feature = "device", feature = "cdc"))]
 cfg.push_str("#define CFG_TUD_CDC 1\n");
 #[cfg(all(feature = "device", feature = "msc"))]
@@ -180,8 +302,6 @@ cfg.push_str("#define CFG_TUD_USBTMC 1\n");
 cfg.push_str("#define CFG_TUD_DFU_RUNTIME 1\n");
 #[cfg(all(feature = "device", feature = "dfu"))]
 cfg.push_str("#define CFG_TUD_DFU 1\n");
-#[cfg(all(feature = "device", feature = "bth"))]
-cfg.push_str("#define CFG_TUD_BTH 1\n");
 #[cfg(all(feature = "device", feature = "ecm_rndis"))]
 cfg.push_str("#define CFG_TUD_ECM_RNDIS 1\n");
 #[cfg(all(feature = "device", feature = "ncm"))]
@@ -191,4 +311,4 @@ cfg.push_str("#define CFG_TUD_NCM 1\n");
 
     cfg
 }
-    
+

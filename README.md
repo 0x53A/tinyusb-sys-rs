@@ -1,3 +1,17 @@
+Forked by @0x53A from https://github.com/nviennot/tinyusb-sys-rs
+
+I've updated tinyusb, all dependencies, and regenerated the code with
+
+```
+uv run .\generate_features.py features
+uv run .\generate_features.py tusb_config.rs
+```
+
+
+------
+
+
+
 [![crates.io](https://img.shields.io/crates/d/tinyusb-sys.svg)](https://crates.io/crates/tinyusb-sys)
 [![crates.io](https://img.shields.io/crates/v/tinyusb-sys.svg)](https://crates.io/crates/tinyusb-sys)
 
