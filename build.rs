@@ -8,6 +8,8 @@ use std::{
 
 mod tusb_config;
 
+const TINUSB_PATH: &str = "./tinyusb";
+
 fn add_all_c_files_in_dir(build: &mut Build, path: impl AsRef<Path>) {
     for entry in glob::glob(path.as_ref().join("**/*.c").to_str().unwrap()).unwrap() {
         let path = entry.unwrap();
@@ -79,11 +81,11 @@ fn main() {
     eprintln!("include_paths={:?}", include_paths);
 
     let mut build = Build::new();
-    add_all_c_files_in_dir(&mut build, "../tinyusb/src");
+    add_all_c_files_in_dir(&mut build, format!("{TINUSB_PATH}/src"));
     build.flag("-mlongcalls");
     build.flag_if_supported("-Os");
     build
-        .include("../tinyusb/src")
+        .include(format!("{TINUSB_PATH}/src"))
         .include(&out_dir) // for the tusb_config.h file
         .compile("tinyusb");
 
@@ -95,7 +97,7 @@ fn main() {
     
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
     let bindings = bindgen::Builder::default()
-        .header("../tinyusb/src/tusb.h")
+        .header(format!("{TINUSB_PATH}/src/tusb.h"))
         .rustified_enum(".*")
         .clang_arg(&format!("-I{}", &out_dir.display()))
         .derive_default(true)
@@ -109,7 +111,7 @@ fn main() {
             "-fvisibility=default",
             "-fshort-enums",
         ])
-        .clang_arg("-I../tinyusb/src")
+        .clang_arg(format!("-I{TINUSB_PATH}/src"))
         .clang_args(&include_paths)
         .generate()
         .expect("Unable to generate bindings");
