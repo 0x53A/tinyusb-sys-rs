@@ -81,6 +81,7 @@ fn main() {
     let mut build = Build::new();
     add_all_c_files_in_dir(&mut build, "../tinyusb/src");
     build.flag("-mlongcalls");
+    build.flag_if_supported("-Os");
     build
         .include("../tinyusb/src")
         .include(&out_dir) // for the tusb_config.h file
@@ -94,7 +95,7 @@ fn main() {
     
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
     let bindings = bindgen::Builder::default()
-        .header("tinyusb/src/tusb.h")
+        .header("../tinyusb/src/tusb.h")
         .rustified_enum(".*")
         .clang_arg(&format!("-I{}", &out_dir.display()))
         .derive_default(true)
@@ -108,7 +109,7 @@ fn main() {
             "-fvisibility=default",
             "-fshort-enums",
         ])
-        .clang_arg("-Itinyusb/src")
+        .clang_arg("-I../tinyusb/src")
         .clang_args(&include_paths)
         .generate()
         .expect("Unable to generate bindings");

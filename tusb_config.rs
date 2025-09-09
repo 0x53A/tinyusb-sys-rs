@@ -260,7 +260,7 @@ pub fn generate_cfg() -> String {
     #[cfg(all(feature = "host", feature = "cdc_pl2303"))]
     cfg.push_str("#define CFG_TUH_CDC_PL2303 1\n");
     #[cfg(all(feature = "host", feature = "hid"))]
-    cfg.push_str("#define CFG_TUH_HID 10\n");
+    cfg.push_str("#define CFG_TUH_HID 6\n");
     #[cfg(all(feature = "host", feature = "midi"))]
     cfg.push_str("#define CFG_TUH_MIDI 1\n");
     #[cfg(all(feature = "host", feature = "msc"))]
@@ -309,8 +309,7 @@ pub fn generate_cfg() -> String {
     cfg.push_str("#define CFG_TUH_ENABLED 1\n");
 
     cfg.push_str("#define CFG_TUH_LOG_LEVEL 2\n");
-    cfg.push_str("#define CFG_TUSB_DEBUG 3\n");
-    // cfg.push_str("#define CFG_TUH_DWC2_DMA_ENABLE 0\n");
+    cfg.push_str("#define CFG_TUSB_DEBUG 0\n");
 
     cfg.push_str("#endif\n");
 
