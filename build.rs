@@ -30,28 +30,33 @@ fn main() {
             .expect("Failed to write to tusb_config.h");
     }
 
-    // Hardcode toolchain paths (equivalent to exporting the env vars)
-    // BINDGEN_EXTRA_CLANG_ARGS provides additional -I for bindgen
-    // LIBCLANG_PATH tells the runtime where to find libclang
-    env::set_var(
-        "BINDGEN_EXTRA_CLANG_ARGS",
-        "-I/home/lukas/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf/xtensa-esp-elf/include",
-    );
-    env::set_var(
-        "LIBCLANG_PATH",
-        "/home/lukas/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-19.1.2_20250225/esp-clang/lib",
-    );
+    // We can assume that the user has installed the esp toolchain using 'espup'.
 
-    // Set cross-compiler env vars early so cc::Build probes use the xtensa toolchain
     if let Ok(target) = env::var("TARGET") {
         if target == "xtensa-esp32s3-none-elf" {
+            let mut home = env::var("HOME").expect("Missing HOME env var");
+            if home.ends_with('/') {
+                home.pop();
+            }
+
+            let xtensa_esp_elf = format!(
+                "{home}/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf"
+            );
+            let esp_clang = format!("{home}/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-19.1.2_20250225/esp-clang");
+
+            env::set_var(
+                "BINDGEN_EXTRA_CLANG_ARGS",
+                format!("-I{xtensa_esp_elf}/xtensa-esp-elf/include"),
+            );
+            env::set_var("LIBCLANG_PATH", format!("{esp_clang}/lib"));
+
             env::set_var(
                 "CC_xtensa_esp32s3_none_elf",
-                "/home/lukas/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc",
+                format!("{xtensa_esp_elf}/bin/xtensa-esp32s3-elf-gcc"),
             );
             env::set_var(
                 "AR_xtensa_esp32s3_none_elf",
-                "/home/lukas/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf/bin/xtensa-esp32s3-elf-ar",
+                format!("{xtensa_esp_elf}/bin/xtensa-esp32s3-elf-ar"),
             );
         }
     }
@@ -89,12 +94,11 @@ fn main() {
         .include(&out_dir) // for the tusb_config.h file
         .compile("tinyusb");
 
-    
     // Set the correct cross-compiler for cc crate
     if target == "xtensa-esp32s3-none-elf" {
         env::set_var("CC_xtensa_esp32s3_none_elf", "xtensa-esp32s3-elf-gcc");
     }
-    
+
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
     let bindings = bindgen::Builder::default()
         .header(format!("{TINUSB_PATH}/src/tusb.h"))
