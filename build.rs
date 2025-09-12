@@ -34,15 +34,33 @@ fn main() {
 
     if let Ok(target) = env::var("TARGET") {
         if target == "xtensa-esp32s3-none-elf" {
-            let mut home = env::var("HOME").expect("Missing HOME env var");
-            if home.ends_with('/') {
-                home.pop();
+            let xtensa_esp_elf: String;
+            let esp_clang: String;
+
+            #[cfg(target_os = "linux")]
+            {
+                let mut home = env::var("HOME").expect("Missing HOME env var");
+                if home.ends_with('/') {
+                    home.pop();
+                }
+
+                xtensa_esp_elf = format!(
+                    "{home}/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf"
+                );
+                esp_clang = format!("{home}/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-19.1.2_20250225/esp-clang");
             }
 
-            let xtensa_esp_elf = format!(
-                "{home}/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf"
-            );
-            let esp_clang = format!("{home}/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-19.1.2_20250225/esp-clang");
+            #[cfg(target_os = "windows")]
+            {
+                let mut home = env::var("USERPROFILE").expect("Missing USERPROFILE env var");
+                if home.ends_with('\\') {
+                    home.pop();
+                }
+
+                xtensa_esp_elf = format!("{home}\\.rustup\\toolchains\\esp\\xtensa-esp-elf");
+                esp_clang =
+                    format!("{home}\\.rustup\\toolchains\\esp\\xtensa-esp32-elf-clang\\esp-clang");
+            }
 
             env::set_var(
                 "BINDGEN_EXTRA_CLANG_ARGS",
